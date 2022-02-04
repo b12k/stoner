@@ -45,11 +45,15 @@ jobs:
         name: Build images
         run: yarn docker-build-ci
       -
-        name: List images
-        run: docker images
+        name: List images to tag
+        run: docker images --format "{{.Repository}}" | grep stoner
+      - 
+        name: Tag cached images
+        run: docker images --format "{{.Repository}}" | grep stoner | xargs -I "{}" docker tag "{}" localhost:5000/"{}"
+      -
+        name: List images to push
+        run: docker images --format "{{.Repository}}" | grep localhost:5000/stoner 
       - 
         name: Push images to local registry
         # if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          docker images --format "{{.Repository}}" | grep stoner | xargs -I "{}" docker tag "{}" localhost:5000/"{}"
-          docker images --format "{{.Repository}}" | grep localhost:5000/stoner | xargs -I "{}" docker push "{}"
+        run: docker images --format "{{.Repository}}" | grep localhost:5000/stoner | xargs -I "{}" docker push"{}"
