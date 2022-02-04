@@ -16,7 +16,7 @@
     "storybook-build": "turbo run storybook-build --parallel",
     "build": "turbo run build",
     "docker-build": "turbo run docker-build --parallel",
-    "docker-build-ci": "turbo run docker-build-ci --parallel --cache-dir=\".turbo-cache\"",
+    "docker-build-ci": "turbo run docker-build-ci --parallel",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{json,ts,js,jsx,yaml,tsx,md}\"",
     "prepare": "run-p _prepare-*",

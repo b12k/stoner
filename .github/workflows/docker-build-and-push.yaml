@@ -38,7 +38,7 @@ jobs:
         id: turbo-cache
         uses: actions/cache@v2
         with:
-          path: /.turbo-cache
+          path: node_modules/.cache/turbo
           key: turbo-${{ github.job }}-${{ github.ref_name }}-${{ github.sha }}
           restore-keys: turbo-${{ github.job }}-${{ github.ref_name }}-
       -
