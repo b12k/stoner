@@ -1,1 +1,1 @@
-module.exports = require('@stoner/docker-config').getBuildArgs();
+module.exports = require('../../../configs/docker/scripts').getBuildArgs();
