@@ -13,7 +13,7 @@
     "_dev": "tsdx watch",
     "build": "tsdx build",
     "docker-build": "cd ../../ && docker build . -f infrastructure/docker/Dockerfile -t stoner/ui-kit --build-arg WORKSPACE=@stoner/ui-kit",
-    "docker-build-ci": "docker pull localhost:5000/stoner/ui-kit && cd ../../ && docker build . -f infrastructure/docker/Dockerfile -t stoner/ui-kit --build-arg WORKSPACE=@stoner/rock-bff-api --cache-from=localhost:5000/stoner/ui-kit",
+    "docker-build-ci": "docker pull localhost:5000/stoner/ui-kit || true && cd ../../ && docker build . -f infrastructure/docker/Dockerfile -t stoner/ui-kit --build-arg WORKSPACE=@stoner/rock-bff-api --cache-from=localhost:5000/stoner/ui-kit",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
     "storybook": "cross-env-shell \"start-storybook -p $UI_KIT_STORYBOOK_PORT\"",

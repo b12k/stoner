@@ -49,7 +49,7 @@ jobs:
         run: docker images
       - 
         name: Push images to local registry
-        if: steps.cache-docker.outputs.cache-hit != 'true'
+        # if: steps.cache.outputs.cache-hit != 'true'
         run: |
           docker images --format "{{.Repository}}" | grep stoner | xargs -I "{}" docker tag "{}" localhost:5000/"{}"
           docker images --format "{{.Repository}}" | grep localhost:5000/stoner | xargs -I "{}" docker push "{}"
