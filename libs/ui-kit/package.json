@@ -12,7 +12,7 @@
     "start": "serve storybook-static",
     "_dev": "tsdx watch",
     "build": "tsdx build",
-    "docker-build": "cd ../../ && docker build . -f infrastructure/docker/Dockerfile -t ui-kit --build-arg WORKSPACE=@stoner/ui-kit",
+    "docker-build": "cd ../../ && docker build . -f infrastructure/docker/Dockerfile -t stoner/ui-kit --build-arg WORKSPACE=@stoner/ui-kit",
     "docker-build-ci": "cd ../../ && docker buildx build . -f infrastructure/docker/Dockerfile -t ui-kit --build-arg WORKSPACE=@stoner/ui-kit --cache-from=type=local,src=/tmp/.buildx-cache --cache-to=type=local,src=/tmp/.buildx-cache-new",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
