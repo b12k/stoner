@@ -8,7 +8,7 @@
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "build": "nest build",
     "docker-build": "cd ../../../ && docker build . -f infrastructure/docker/Dockerfile -t stoner/rock-bff-api --build-arg NAME=stoner/rock-bff-api",
-    "docker-build-ci": "yarn docker-build --cache-from=localhost:5000/stoner/rock-bff-api --build-arg BUILDKIT_INLINE_CACHE=1",
+    "docker-build-ci": "cd ../../../ && docker build . -f infrastructure/docker/Dockerfile -t stoner/rock-bff-api --build-arg NAME=stoner/rock-bff-api --cache-from=localhost:5000/stoner/rock-bff-api --build-arg BUILDKIT_INLINE_CACHE=1",
     "prebuild": "rimraf dist",
     "test": "jest",
     "test-watch": "jest --watch",

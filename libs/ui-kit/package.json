@@ -13,7 +13,7 @@
     "_dev": "tsdx watch",
     "build": "tsdx build",
     "docker-build": "cd ../../ && docker build . -f infrastructure/docker/Dockerfile -t stoner/ui-kit --build-arg NAME=stoner/ui-kit",
-    "docker-build-ci": "yarn docker-build --cache-from=localhost:5000/stoner/ui-kit --build-arg BUILDKIT_INLINE_CACHE=1",
+    "docker-build-ci": "cd ../../ && docker build . -f infrastructure/docker/Dockerfile -t stoner/ui-kit --build-arg NAME=stoner/ui-kit --cache-from=localhost:5000/stoner/ui-kit --build-arg BUILDKIT_INLINE_CACHE=1",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
     "storybook": "cross-env-shell \"start-storybook -p $UI_KIT_STORYBOOK_PORT\"",
