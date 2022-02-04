@@ -25,7 +25,7 @@ jobs:
           cache: yarn
       -
         name: Instal Node dependencies
-        run: yarn global add turbo env-cmd
+        run: yarn global add turbo env-cmd npm-run-all
       -
         name: Setup local cache registry
         id: cache
