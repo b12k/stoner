@@ -20,12 +20,18 @@ jobs:
         with:
           node-version: 16.x
           cache: yarn
+        run: yarn global add turbo env-cmd wait-on
       -
-        name: Install global deps
-        run: yarn global add turbo env-cmd -g
+        name: Setup local cache registry
+        uses: actions/cache@v2
+        with:
+          path: /tmp/docker-cache
+          key: docker-${{ hashFiles('**/Dockerfile') }}
+        run: |
+          docker run -d -p 5000:5000 --restart=always --name registry -v /tmp/docker-cache:/var/lib/registry registry:2 && npx wait-on tcp:5000
       -
         name: Build images
         run: yarn docker-build
       - 
-        name: List images
+        name: Push images to local registry
         run: docker images --format "{{.Repository}}" | grep stoner

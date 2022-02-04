@@ -7,7 +7,7 @@
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "build": "nest build",
     "docker-build": "cd ../../../ && docker build . -f infrastructure/docker/Dockerfile -t stoner/rock-bff-api --build-arg WORKSPACE=@stoner/rock-bff-api",
-    "docker-build-ci": "cd ../../../ && docker buildx build . -f infrastructure/docker/Dockerfile -t rock-bff-api --build-arg WORKSPACE=@stoner/rock-bff-api --cache-from=type=local,src=/tmp/.buildx-cache --cache-to=type=local,src=/tmp/.buildx-cache-new",
+    "docker-build-ci": "docker pull localhost:5000/stoner/rock-bff-api || true && cd ../../../ && docker build . -f infrastructure/docker/Dockerfile -t stoner/rock-bff-api --build-arg WORKSPACE=@stoner/rock-bff-api --cache-from=localhost:5000/stoner/rock-bff-api",
     "start": "node dist/main",
     "prebuild": "rimraf dist",
     "test": "jest",
