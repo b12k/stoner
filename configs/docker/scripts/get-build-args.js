@@ -11,9 +11,13 @@ module.exports = (dockerFile = 'Dockerfile') => {
     const NAME = require(packageJsonPath).name.replace('@', '');
     const DOCKERFILE = resolve(__dirname, '../dockerfiles', dockerFile);
 
-    return {
+    const environment = {
       NAME: require(packageJsonPath).name.replace('@', ''),
       CONTEXT: gitRoot,
       DOCKERFILE: resolve(__dirname, '../dockerfiles', dockerFile),
-    };
+    }
+
+    console.log('\n\n\n\n', JSON.stringify(environment, null, 2),'\n\n\n\n')
+
+    return environment;
   }
