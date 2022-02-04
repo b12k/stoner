@@ -1,0 +1,15 @@
+.idea
+.vscode
+.DS_Store
+
+.env
+.next
+.turbo
+
+out
+dist
+coverage
+node_modules
+storybook-static
+
+*.log*

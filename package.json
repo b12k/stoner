@@ -1,0 +1,40 @@
+{
+  "name": "stoner",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/**/*",
+    "libs/**/*",
+    "configs/**/*",
+    "infrastructure/**/*",
+    "docs/**/*"
+  ],
+  "scripts": {
+    "dev": "env-cmd turbo run dev --parallel",
+    "dev-prepare": "turbo run dev-prepare --parallel",
+    "storybook": "env-cmd turbo run storybook --parallel",
+    "storybook-build": "turbo run storybook-build --parallel",
+    "build": "turbo run build",
+    "docker-build": "turbo run docker-build --parallel",
+    "docker-build-ci": "turbo run docker-build-ci --parallel",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{json,ts,js,jsx,yaml,tsx,md}\"",
+    "prepare": "run-p _prepare-*",
+    "_prepare-env": "shx cp .env.example .env || true",
+    "_prepare-husky": "echo husky"
+  },
+  "devDependencies": {
+    "env-cmd": "10.1.0",
+    "npm-run-all": "4.1.5",
+    "prettier": "2.5.1",
+    "shx": "0.3.4",
+    "turbo": "1.1.2",
+    "typescript": "4.5.5"
+  },
+  "engines": {
+    "npm": "8.x",
+    "node": "16.x"
+  },
+  "packageManager": "yarn@1.22.15",
+  "dependencies": {}
+}

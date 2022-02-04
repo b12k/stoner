@@ -1,0 +1,43 @@
+{
+  "name": "@stoner/ui-kit",
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "typings": "src/index.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "start": "serve storybook-static",
+    "_dev": "tsdx watch",
+    "build": "tsdx build",
+    "docker-build": "cd ../../ && docker build . -f infrastructure/docker/Dockerfile -t ui-kit --build-arg WORKSPACE=@stoner/ui-kit",
+    "docker-build-ci": "cd ../../ && docker buildx build . -f infrastructure/docker/Dockerfile -t ui-kit --build-arg WORKSPACE=@stoner/ui-kit --cache-from=type=local,src=/tmp/.buildx-cache --cache-to=type=local,src=/tmp/.buildx-cache-new",
+    "test": "tsdx test --passWithNoTests",
+    "lint": "tsdx lint",
+    "storybook": "cross-env-shell \"start-storybook -p $UI_KIT_STORYBOOK_PORT\"",
+    "storybook-build": "build-storybook"
+  },
+  "devDependencies": {
+    "@babel/core": "7.16.12",
+    "@storybook/addon-essentials": "6.4.17",
+    "@storybook/addon-info": "5.3.21",
+    "@storybook/addon-links": "6.4.17",
+    "@storybook/addons": "6.4.17",
+    "@storybook/react": "6.4.17",
+    "@types/react": "17.0.38",
+    "@types/react-dom": "17.0.11",
+    "babel-loader": "8.2.3",
+    "cross-env": "7.0.3",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-is": "17.0.2",
+    "tsdx": "0.14.1",
+    "tslib": "2.3.1",
+    "typescript": "4.5.5"
+  },
+  "dependencies": {
+    "serve": "13.0.2"
+  }
+}

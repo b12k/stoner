@@ -1,0 +1,3 @@
+# 🤘 Stoner Rock
+
+Example monorepo

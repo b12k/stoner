@@ -1,0 +1,33 @@
+{
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**"]
+    },
+    "docker-build": {
+      "outputs": []
+    },
+    "docker-build-ci": {
+      "outputs": []
+    },
+    "lint": {
+      "outputs": []
+    },
+    "test": {
+      "outputs": []
+    },
+    "dev": {
+      "dependsOn": ["^dev:prepare"],
+      "cache": false
+    },
+    "dev-prepare": {
+      "outputs": ["dist/**"]
+    },
+    "storybook": {
+      "cache": false
+    },
+    "storybook:build": {
+      "outputs": ["storybook-static/**"]
+    }
+  }
+}
