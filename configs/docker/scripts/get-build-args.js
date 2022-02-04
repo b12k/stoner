@@ -3,7 +3,7 @@ const { resolve, sep } = require('path');
 
 module.exports = (
   dockerfile = 'Dockerfile',
-  dockerfilesDir = 'configs/docker/dockerfiles',
+  dockerfilesDir = 'configs/docker',
 ) => {
   const cwd = process.cwd();
   const packageJsonPath = resolve(cwd, 'package.json');
