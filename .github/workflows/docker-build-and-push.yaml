@@ -7,9 +7,6 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     env:
-      DOCKER_BUILDKIT: 1
-      NAMESPACE: stoner
-      DEFAULT_TAG: latest
       CACHE_REGISTRY: localhost:5000
     steps:
       -
@@ -25,7 +22,7 @@ jobs:
           cache: yarn
       -
         name: Instal Node dependencies
-        run: yarn global add turbo env-cmd npm-run-all
+        run: yarn global add turbo env-cmd
       -
         name: Setup docker cache
         id: docker-cache

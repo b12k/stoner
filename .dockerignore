@@ -1,13 +1,13 @@
-**/.vscode
 **/.idea
+**/.vscode
 
-**/.github
 **/.next
 **/.turbo
+**/.github
 
 **/out
 **/dist
-**/node_modules
-
-**/infrastructure
 **/docs
+**/dockerfiles
+**/node_modules
+**/infrastructure
