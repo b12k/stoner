@@ -1,8 +1,8 @@
 FROM node:lts-alpine AS base
 RUN apk update
 WORKDIR /app
-ARG NAME
-ENV NAME=${NAME}
+ARG APP_NAME
+ENV APP_NAME=${APP_NAME}
 ENV YARN_CACHE_FOLDER=.yarn-cache
 
 FROM base AS pruner
@@ -13,7 +13,7 @@ COPY ./configs ./configs
 COPY ./package.json ./package.json
 COPY ./yarn.lock ./yarn.lock
 COPY ./turbo.json ./turbo.json
-RUN turbo prune --scope=@${NAME} --docker
+RUN turbo prune --scope=@${APP_NAME} --docker
 
 FROM base AS dev-deps
 COPY --from=pruner /app/out/json/ .
@@ -30,7 +30,7 @@ RUN rm -rf /app/${YARN_CACHE_FOLDER}
 FROM base AS builder
 COPY --from=dev-deps /app/ .
 COPY --from=pruner /app/out/full/ .
-RUN yarn turbo run build --scope=@${NAME} --include-dependencies --no-deps
+RUN yarn turbo run build --scope=@${APP_NAME} --include-dependencies --no-deps
 RUN find . -name node_modules | xargs rm -rf
 
 FROM base AS runner

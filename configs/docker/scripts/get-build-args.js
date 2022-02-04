@@ -13,12 +13,12 @@ module.exports = (
 
   const rootDepth = cwd.split(sep).length - gitRoot.split(sep).length;
 
-  const NAME = require(packageJsonPath).name.replace('@', '');
+  const APP_NAME = require(packageJsonPath).name.replace('@', '');
   const CONTEXT = [...Array(rootDepth)].map(() => '../').join('');
   const DOCKERFILE = [CONTEXT, dockerfilesDir, '/', dockerfile].join('');
   
   return {
-    NAME,
+    APP_NAME,
     CONTEXT,
     DOCKERFILE,
   }
