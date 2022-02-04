@@ -25,21 +25,22 @@ jobs:
           cache: yarn
       -
         name: Instal Node dependencies
-        run: yarn global add turbo env-cmd wait-on
+        run: yarn global add turbo env-cmd
       -
         name: Setup local cache registry
+        id: cache
         uses: actions/cache@v2
         with:
           path: /tmp/docker-cache
           key: docker-${{ hashFiles('**/Dockerfile') }}
       -
         name: Is cached?
-        if: steps.cache-docker.outputs.cache-hit == 'true'
+        if: steps.cache.outputs.cache-hit == 'true'
         run: echo "Cached"
       -
         name: Setup local docker registry
         run: |
-          docker run -d -p 5000:5000 --restart=always --name registry -v /tmp/docker-cache:/var/lib/registry registry:2 && wait-on tcp:5000
+          docker run -d -p 5000:5000 --restart=always --name registry -v /tmp/docker-cache:/var/lib/registry registry:2 && npx wait-on tcp:5000
       -
         name: Build images
         run: yarn docker-build-ci
