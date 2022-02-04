@@ -6,7 +6,7 @@
     "dev": "env-cmd --silent -x next dev -p $ROCK_APP_PORT",
     "build": "next build",
     "docker-build": "env-cmd -x docker build $CONTEXT -f $DOCKERFILE -t $NAME --build-arg NAME=$NAME",
-    "docker-build-ci": "env-cmd -x yarn docker-build --cache-from=$CACHE_REGISTRY/$NAME --build-arg BUILDKIT_INLINE_CACHE=1",
+    "docker-build-ci": "env-cmd -x docker build $CONTEXT -f $DOCKERFILE -t $NAME --build-arg NAME=$NAME --cache-from=$CACHE_REGISTRY/$NAME --build-arg BUILDKIT_INLINE_CACHE=1",
     "start": "next start",
     "lint": "next lint"
   },
