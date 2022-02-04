@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "env-cmd --silent -x next dev -p $ROCK_APP_PORT",
     "build": "next build",
-    "docker-build": "env-cmd -x docker build $CONTEXT -f $DOCKERFILE -t $NAME --build-arg NAME=$NAME",
-    "docker-build-ci": "env-cmd -x docker build ../../../ -f ../../../configs/docker/Dockerfile -t $NAME --build-arg NAME=$NAME --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from=localhost:5000/$NAME ",
+    "docker-build": "env-cmd -x docker build $CONTEXT -f=$DOCKERFILE -t=$NAME --build-arg=NAME=$NAME",
+    "docker-build-ci": "env-cmd -x docker build $CONTEXT -f=$DOCKERFILE -t=$NAME --build-arg=NAME=$NAME --build-arg=BUILDKIT_INLINE_CACHE=1 --cache-from=localhost:5000/$NAME ",
     "#docker-build": "cd ../../../ && docker build . -f infrastructure/docker/Dockerfile -t stoner/rock-app --build-arg NAME=stoner/rock-app",
     "#docker-build-ci": "cd ../../../ && docker build . -f infrastructure/docker/Dockerfile -t stoner/rock-app --build-arg NAME=stoner/rock-app --cache-from=localhost:5000/stoner/rock-app --build-arg BUILDKIT_INLINE_CACHE=1",
     "start": "next start",
