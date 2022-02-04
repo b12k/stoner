@@ -8,6 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DOCKER_BUILDKIT: 1
+      NAMESPACE: stoner
+      DEFAULT_TAG: latest
+      CACHE_REGISTRY: localhost:5000
     steps:
       -
         name: Checkout
@@ -31,7 +34,8 @@ jobs:
           key: docker-${{ hashFiles('**/Dockerfile') }}
       -
         name: Is cached?
-        run: echo ${{ steps.cache-docker.outputs.cache-hit }}
+        if: steps.cache-docker.outputs.cache-hit == 'true'
+        run: echo "Cached"
       -
         name: Setup local docker registry
         run: |
@@ -39,13 +43,12 @@ jobs:
       -
         name: Build images
         run: yarn docker-build-ci
+      -
+        name: List images
+        run: docker images
       - 
         name: Push images to local registry
         if: steps.cache-docker.outputs.cache-hit != 'true'
         run: |
-          docker images --format "{{.Repository}}" \
-          | grep stoner \
-          | xargs -I "{}" docker tag "{}" localhost:5000/"{}"
-          docker images --format "{{.Repository}}" \
-          | grep localhost/stoner \
-          | xargs -I "{}" docker push "{}"
+          docker images --format "{{.Repository}}" | grep stoner | xargs -I "{}" docker tag "{}" localhost:5000/"{}"
+          docker images --format "{{.Repository}}" | grep localhost:5000/stoner | xargs -I "{}" docker push "{}"
