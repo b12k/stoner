@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "env-cmd --silent -x next dev -p $ROCK_APP_PORT",
     "build": "next build",
-    "docker-build": "cd ../../../ && docker build . -f configs/docker/dockerfiles/Dockerfile -t stoner/rock-app --build-arg NAME=stoner/rock-app",
+    "docker-build": "cd ../../../ && docker build . -f infrastructure/docker/Dockerfile -t stoner/rock-app --build-arg NAME=stoner/rock-app",
     "docker-build-ci": "yarn docker-build --cache-from=localhost:5000/stoner/rock-app --build-arg BUILDKIT_INLINE_CACHE=1",
     "start": "next start",
     "lint": "next lint"

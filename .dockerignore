@@ -8,6 +8,5 @@
 **/out
 **/dist
 **/docs
-**/dockerfiles
 **/node_modules
 **/infrastructure
