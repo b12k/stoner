@@ -13,7 +13,7 @@
     "_dev": "tsdx watch",
     "build": "tsdx build",
     "docker-build": "env-cmd -x docker build $CONTEXT -f $DOCKERFILE -t $NAME --build-arg NAME=$NAME",
-    "docker-build-ci": "env-cmd -x docker build ../../../ -f $DOCKERFILE -t $NAME --build-arg NAME=$NAME --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from=localhost:5000/$NAME ",
+    "docker-build-ci": "env-cmd -x docker build ../../ -f $DOCKERFILE -t $NAME --build-arg NAME=$NAME --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from=localhost:5000/$NAME ",
     "#docker-build": "cd ../../ && docker build . -f infrastructure/docker/Dockerfile -t stoner/ui-kit --build-arg NAME=stoner/ui-kit",
     "#docker-build-ci": "cd ../../ && docker build . -f infrastructure/docker/Dockerfile -t stoner/ui-kit --build-arg NAME=stoner/ui-kit --cache-from=localhost:5000/stoner/ui-kit --build-arg BUILDKIT_INLINE_CACHE=1",
     "test": "tsdx test --passWithNoTests",
