@@ -6,7 +6,7 @@
     "dev": "env-cmd --silent -x next dev -p $ROCK_APP_PORT",
     "build": "next build",
     "docker-build": "cd ../../../ && docker build . -f infrastructure/docker/Dockerfile -t stoner/rock-app --build-arg WORKSPACE=@stoner/rock-app",
-    "docker-build-ci": "run-s _docker-build-ci-*",
+    "docker-build-ci": "run-s _docker-build-ci-0 _docker-build-ci-0",
     "_docker-build-ci-0": "docker pull localhost:5000/stoner/rock-app || true",
     "_docker-build-ci-1": "cd ../../../ && docker build . -f infrastructure/docker/Dockerfile -t stoner/rock-app --build-arg WORKSPACE=@stoner/rock-app --cache-from=localhost:5000/stoner/rock-app",
     "start": "next start",
