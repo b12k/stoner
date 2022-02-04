@@ -44,9 +44,11 @@ jobs:
       -
         name: Is Turbo cached?
         if: steps.turbo-cache.outputs.cache-hit == 'true'
+        run: echo "Turbo cached"
       -
-        name: Is Turbo cached?
+        name: Is Docker cached?
         if: steps.docker-cache.outputs.cache-hit == 'true'
+        run: echo "Docker cached"
       -
         name: Setup local docker registry
         run: |
