@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "env-cmd --silent -x next dev -p $ROCK_APP_PORT",
     "build": "next build",
-    "docker-build": "cd ../../../ && docker build . -f infrastructure/docker/Dockerfile -t rock-app --build-arg WORKSPACE=@stoner/rock-app",
+    "docker-build": "cd ../../../ && docker build . -f infrastructure/docker/Dockerfile -t stoner/rock-app --build-arg WORKSPACE=@stoner/rock-app",
     "docker-build-ci": "cd ../../../ && docker buildx build . -f infrastructure/docker/Dockerfile -t rock-app --build-arg WORKSPACE=@stoner/rock-app --cache-from=type=local,src=/tmp/.buildx-cache --cache-to=type=local,src=/tmp/.buildx-cache-new",
     "start": "next start",
     "lint": "next lint"
