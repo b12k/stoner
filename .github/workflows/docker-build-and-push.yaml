@@ -45,7 +45,7 @@ jobs:
       -
         name: Build containers
         run: |
-          yarn docker-build-ci
+          yarn docker-build
           docker images
 #       -
 #         name: List containers
