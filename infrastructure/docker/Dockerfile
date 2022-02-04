@@ -7,13 +7,18 @@ ENV YARN_CACHE_FOLDER=.yarn-cache
 
 FROM base AS pruner
 RUN yarn global add turbo@1.1.2
-COPY . .
+COPY ./apps ./apps
+COPY ./libs ./libs
+COPY ./configs ./configs
+COPY ./package.json ./package.json
+COPY ./yarn.lock ./yarn.lock
+COPY ./turbo.json ./turbo.json
 RUN turbo prune --scope=${WORKSPACE} --docker
 
 FROM base AS dev-deps
 COPY --from=pruner /app/out/json/ .
 COPY --from=pruner /app/out/yarn.lock ./yarn.lock
-RUN yarn install --ignore-scripts
+RUN yarn install --frozen-lockfile --ignore-scripts
 
 FROM base AS prod-deps
 COPY --from=pruner /app/out/json/ .
