@@ -16,6 +16,7 @@ jobs:
     env:
       DOCKER_BUILDKIT: 1
       CACHE_REGISTRY: localhost:5000
+      YARN_CACHE_FOLDER: /tmp/yarn-cache
     steps:
       -
         name: Checkout
@@ -27,12 +28,16 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16.x
-          cache: yarn
+#         cache: yarn
       -
-        name: Instal Node dependencies
-        run: yarn global add turbo env-cmd
+        name: Setup Yarn cache
+        id: yarn-cache
+        uses: actions/cache@v2
+        with:
+          path: /tmp/yarn-cache
+          key: yarn-${{ hashFiles('yarn.lock') }}
       -
-        name: Setup docker cache
+        name: Setup Docker cache
         id: docker-cache
         uses: actions/cache@v2
         with:
@@ -54,6 +59,9 @@ jobs:
         name: Is Docker cached?
         if: steps.docker-cache.outputs.cache-hit == 'true'
         run: echo "Docker cached"
+      -
+        name: Yarn install
+        run: yarn install --frozen-lockfile --ignore-scripts
       -
         name: Setup local docker registry
         run: |
