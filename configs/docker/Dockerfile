@@ -7,7 +7,7 @@ ENV YARN_CACHE_FOLDER=.yarn-cache
 
 FROM base AS pruner
 RUN yarn global add turbo@1.1.2
-COPY /tmp/yarn-cache ./${YARN_CACHE_FOLDER}
+COPY ./.yarn-cache ./${YARN_CACHE_FOLDER}
 COPY ./apps ./apps
 COPY ./libs ./libs
 COPY ./configs ./configs

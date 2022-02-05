@@ -16,7 +16,7 @@ jobs:
     env:
       DOCKER_BUILDKIT: 1
       CACHE_REGISTRY: localhost:5000
-      YARN_CACHE_FOLDER: /tmp/yarn-cache
+      YARN_CACHE_FOLDER: ./.yarn-cache
     steps:
       -
         name: Checkout
@@ -34,7 +34,7 @@ jobs:
         id: yarn-cache
         uses: actions/cache@v2
         with:
-          path: /tmp/yarn-cache
+          path: ./.yarn-cache
           key: yarn-${{ hashFiles('yarn.lock') }}
       -
         name: Setup Docker cache
