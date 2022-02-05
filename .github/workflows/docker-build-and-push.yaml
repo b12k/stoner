@@ -2,6 +2,13 @@ name: Docker build and push
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - apps/**
+      - libs/**
+      - configs/**
   
 jobs:
   build-and-push:
