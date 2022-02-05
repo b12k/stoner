@@ -63,14 +63,18 @@ jobs:
         run: yarn docker-build-ci
       -
         name: List images to tag
-        run: docker images --format "{{.Repository}}" | grep stoner
+        id: images
+        run: echo ::set-output name=no-new::$(docker images --format "{{.Repository}}" | grep stoner || echo true)
       - 
         name: Tag cached images
+        if: steps.images.outputs.no-new != 'true'
         run: docker images --format "{{.Repository}}" | grep stoner | xargs -I "{}" docker tag "{}" localhost:5000/"{}"
       -
         name: List images to push
-        run: docker images --format "{{.Repository}}" | grep localhost:5000/stoner 
+        if: steps.images.outputs.no-new != 'true'
+        run: docker images --format "{{.Repository}}" | grep localhost:5000/stoner || echo false
       - 
         name: Push images to local registry
+        if: steps.images.outputs.no-new != 'true'
         # if: steps.cache.outputs.cache-hit != 'true'
         run: docker images --format "{{.Repository}}" | grep localhost:5000/stoner | xargs -I "{}" docker push "{}"
