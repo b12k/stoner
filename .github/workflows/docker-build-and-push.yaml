@@ -28,14 +28,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16.x
-#         cache: yarn
-      -
-        name: Setup Yarn cache
-        id: yarn-cache
-        uses: actions/cache@v2
-        with:
-          path: ./.yarn-cache
-          key: yarn-${{ hashFiles('yarn.lock') }}
+          cache: yarn
       -
         name: Setup Docker cache
         id: docker-cache
@@ -61,7 +54,7 @@ jobs:
         run: echo "Docker cached"
       -
         name: Yarn install
-        run: yarn install --frozen-lockfile --ignore-scripts
+        run: yarn global add turbo env-cmd
       -
         name: Setup local docker registry
         run: |
