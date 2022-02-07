@@ -16,6 +16,7 @@ jobs:
     env:
       DOCKER_BUILDKIT: 1
       CACHE_REGISTRY: localhost:5000
+      YARN_CACHE_FOLDER: ./.yarn-cache
     steps:
       -
         name: Checkout
@@ -27,12 +28,16 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16.x
-          cache: yarn
+#         cache: yarn
       -
-        name: Instal Node dependencies
-        run: yarn global add turbo env-cmd
+        name: Setup Yarn cache
+        id: yarn-cache
+        uses: actions/cache@v2
+        with:
+          path: ./.yarn-cache
+          key: yarn-${{ hashFiles('yarn.lock') }}
       -
-        name: Setup docker cache
+        name: Setup Docker cache
         id: docker-cache
         uses: actions/cache@v2
         with:
@@ -55,6 +60,9 @@ jobs:
         if: steps.docker-cache.outputs.cache-hit == 'true'
         run: echo "Docker cached"
       -
+        name: Yarn install
+        run: yarn install --frozen-lockfile --ignore-scripts
+      -
         name: Setup local docker registry
         run: |
           docker run -d -p 5000:5000 --restart=always --name registry -v /tmp/docker-cache:/var/lib/registry registry:2 && npx wait-on tcp:5000
@@ -63,14 +71,18 @@ jobs:
         run: yarn docker-build-ci
       -
         name: List images to tag
-        run: docker images --format "{{.Repository}}" | grep stoner
+        id: images
+        run: echo ::set-output name=no-new::$(docker images --format "{{.Repository}}" | grep stoner || echo true)
       - 
         name: Tag cached images
+        if: steps.images.outputs.no-new != 'true'
         run: docker images --format "{{.Repository}}" | grep stoner | xargs -I "{}" docker tag "{}" localhost:5000/"{}"
       -
         name: List images to push
-        run: docker images --format "{{.Repository}}" | grep localhost:5000/stoner 
+        if: steps.images.outputs.no-new != 'true'
+        run: docker images --format "{{.Repository}}" | grep localhost:5000/stoner || echo false
       - 
         name: Push images to local registry
+        if: steps.images.outputs.no-new != 'true'
         # if: steps.cache.outputs.cache-hit != 'true'
         run: docker images --format "{{.Repository}}" | grep localhost:5000/stoner | xargs -I "{}" docker push "{}"
