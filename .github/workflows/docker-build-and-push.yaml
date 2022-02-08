@@ -53,8 +53,8 @@ jobs:
         if: steps.docker-cache.outputs.cache-hit == 'true'
         run: echo "Docker cached"
       -
-        name: Yarn install
-        run: yarn global add turbo env-cmd
+        name: Yarn add global base deps
+        run: yarn global add turbo @b12k/env-cmd
       -
         name: Setup local docker registry
         run: |
@@ -76,6 +76,5 @@ jobs:
         run: docker images --format "{{.Repository}}" | grep localhost:5000/stoner || echo false
       - 
         name: Push images to local registry
-        if: steps.images.outputs.no-new != 'true'
-        # if: steps.cache.outputs.cache-hit != 'true'
+        if: steps.images.outputs.no-new != 'true' && steps.cache.outputs.cache-hit != 'true'
         run: docker images --format "{{.Repository}}" | grep localhost:5000/stoner | xargs -I "{}" docker push "{}"
