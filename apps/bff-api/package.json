@@ -1,0 +1,52 @@
+{
+  "name": "@stoner/rock-bff-api",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nest start --watch",
+    "start": "node dist/main",
+    "lint": "eslint src --format stylish",
+    "build": "shx rm -rf ./dist && nest build",
+    "docker-build": "env-cmd -i docker build {{CONTEXT}} --file={{DOCKERFILE}} --tag={{APP_NAME}} --build-arg=APP_NAME={{APP_NAME}}",
+    "docker-build-ci": "env-cmd -i yarn docker-build --build-arg=BUILDKIT_INLINE_CACHE=1 --cache-from=localhost:5000/{{APP_NAME}}",
+    "test": "jest --coverage",
+    "test-watch": "jest --watch",
+    "test-cov": "jest --coverage",
+    "test-e2e": "jest --config ./test/jest-e2e.json"
+  },
+  "dependencies": {
+    "@nestjs/common": "8.3.0",
+    "@nestjs/core": "8.3.0",
+    "@nestjs/platform-express": "8.3.0",
+    "reflect-metadata": "0.1.13",
+    "rxjs": "7.5.4"
+  },
+  "devDependencies": {
+    "@b12k/env-cmd": "10.2.0",
+    "@nestjs/cli": "8.2.1",
+    "@nestjs/schematics": "8.0.6",
+    "@nestjs/testing": "8.3.0",
+    "@stoner/config-docker": "*",
+    "@stoner/config-eslint": "*",
+    "@stoner/config-jest": "*",
+    "@stoner/config-typescript": "*",
+    "@types/express": "4.17.13",
+    "@types/jest": "27.4.0",
+    "@types/node": "17.0.18",
+    "@types/supertest": "2.0.11",
+    "@typescript-eslint/eslint-plugin": "5.12.0",
+    "@typescript-eslint/parser": "5.12.0",
+    "eslint": "8.9.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-prettier": "4.0.0",
+    "jest": "27.5.1",
+    "shx": "0.3.4",
+    "source-map-support": "0.5.21",
+    "supertest": "6.2.2",
+    "ts-jest": "27.1.3",
+    "ts-loader": "9.2.6",
+    "ts-node": "10.5.0",
+    "tsconfig-paths": "3.12.0",
+    "typescript": "4.5.5"
+  }
+}

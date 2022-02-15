@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "NestJS",
+  "extends": "./base.json",
+  "compilerOptions": {
+    "declaration": false,
+    "declarationMap": false,
+    "module": "commonjs",
+    "target": "es2017"
+  }
+}

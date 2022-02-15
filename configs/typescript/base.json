@@ -1,20 +1,28 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "Default",
   "compilerOptions": {
+    "module": "esnext",
+    "strict": true,
+    "allowJs": true,
     "composite": false,
+    "typeRoots": ["../../node_modules/@types"],
+    "sourceMap": true,
     "declaration": true,
-    "declarationMap": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
+    "skipLibCheck": true,
     "inlineSources": false,
+    "declarationMap": true,
+    "noUnusedLocals": true,
+    "removeComments": true,
+    "esModuleInterop": true,
     "isolatedModules": true,
     "moduleResolution": "node",
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
+    "resolveJsonModule": true,
+    "noUnusedParameters": true,
     "preserveWatchOutput": true,
-    "skipLibCheck": true,
-    "strict": true
-  },
-  "exclude": ["node_modules"]
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true
+  }
 }
