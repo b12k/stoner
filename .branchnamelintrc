@@ -1,0 +1,14 @@
+{
+  "pattern": ":type/:description/:issue?",
+  "params": {
+    "type": [
+      "introduce",
+      "improve",
+      "fix",
+      "docs",
+      "misc"
+    ],
+    "description": ["[a-z0-9-]+"],
+    "issue": ["udp-[0-9]+"]
+  }
+}

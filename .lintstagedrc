@@ -1,0 +1,6 @@
+{
+  "{apps,libs}/**/*.{ts,tsx,json,md,scss,html}": [
+    "npm run nx:format",
+    "npm run lint:affected"
+  ]
+}
