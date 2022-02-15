@@ -22,17 +22,24 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16.x
-      - name: Setup turbo cache
-        id: turbo-cache
-        uses: actions/cache@v2
-        with:
-          path: node_modules/.cache/turbo
       - name: Setup node_modules cache
         id: node-modules-cache
         uses: actions/cache@v2
         with:
           path: node_modules
           key: yarn-lock-${{ hashFiles('yarn.lock') }}
+      - name: Setup turbo cache
+        id: turbo-cache
+        uses: actions/cache@v2
+        with:
+          path: node_modules/.cache/turbo
+          key: turbo-cache
+      - name: Turbo cache hit
+        if: steps.turbo-cache.outputs.cache-hit == 'true'
+        run: echo "Turbo cached"
+      - name: Node modules cache hit
+        if: steps.node-modules-cache.outputs.cache-hit == 'true'
+        run: echo "Node modules cached"
       - name: Install dependencies
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: yarn install --frozen-lockfile --prefer-offline --ignore-scripts
