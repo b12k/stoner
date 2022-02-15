@@ -2,7 +2,9 @@ name: Docker build and push
 
 on:
   workflow_dispatch:
-  push:
+  pull_request:
+    types:
+      - closed
     branches:
       - main
     paths:
@@ -12,6 +14,7 @@ on:
 
 jobs:
   build-and-push:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     env:
       DOCKER_BUILDKIT: 1
@@ -27,12 +30,6 @@ jobs:
         with:
           node-version: 16.x
           cache: yarn
-      - name: Setup Docker cache
-        id: docker-cache
-        uses: actions/cache@v2
-        with:
-          path: /tmp/docker-cache
-          key: docker-${{ hashFiles('**/Dockerfile') }}
       - name: Setup Turbo cache
         id: turbo-cache
         uses: actions/cache@v2
@@ -40,6 +37,12 @@ jobs:
           path: node_modules/.cache/turbo
           key: turbo-${{ github.job }}-${{ github.ref_name }}-${{ github.sha }}
           restore-keys: turbo-${{ github.job }}-${{ github.ref_name }}-
+      - name: Setup Docker cache
+        id: docker-cache
+        uses: actions/cache@v2
+        with:
+          path: /tmp/docker-cache
+          key: docker-${{ hashFiles('**/Dockerfile') }}
       - name: Is Turbo cached?
         if: steps.turbo-cache.outputs.cache-hit == 'true'
         run: echo "Turbo cached"

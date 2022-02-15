@@ -4,10 +4,7 @@ const { resolve, sep } = require('path');
 const DEFAULT_DOCKERFILE_NAME = 'Dockerfile';
 const DEFAULT_DOCKERFILES_DIR = 'configs/docker';
 
-module.exports = (
-  dockerfile = DEFAULT_DOCKERFILE_NAME,
-  dockerfilesDir = DEFAULT_DOCKERFILES_DIR,
-) => {
+module.exports = (dockerfile = DEFAULT_DOCKERFILE_NAME, dockerfilesDir = DEFAULT_DOCKERFILES_DIR) => {
   const cwd = process.cwd();
   const packageJsonPath = resolve(cwd, 'package.json');
   const gitRoot = resolve(execSync('git rev-parse --show-toplevel').toString().replace('\n', ''));

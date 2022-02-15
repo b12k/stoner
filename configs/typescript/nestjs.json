@@ -3,9 +3,9 @@
   "display": "NestJS",
   "extends": "./base.json",
   "compilerOptions": {
+    "declaration": false,
+    "declarationMap": false,
     "module": "commonjs",
-    "outDir": "./dist",
-    "target": "es2017",
-    "baseUrl": "./"
+    "target": "es2017"
   }
 }

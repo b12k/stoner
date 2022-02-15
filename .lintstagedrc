@@ -1,6 +1,8 @@
 {
-  "{apps,libs}/**/*.{ts,tsx,json,md,scss,html}": [
-    "npm run nx:format",
-    "npm run lint:affected"
+  "{apps,libs}/**/*.{ts,tsx,js,jsx}": [
+    "prettier --write"
+  ],
+  "*.{json,yaml,md}": [
+    "prettier --write"
   ]
 }

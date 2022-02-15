@@ -1,17 +1,19 @@
 {
   "name": "@stoner/tailwind-preset",
   "version": "0.0.0",
+  "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
-  "files": [
-    "dist",
-    "src"
-  ],
   "scripts": {
     "start": "tsdx watch",
-    "build": "tsdx build",
-    "test": "tsdx test",
-    "lint": "tsdx lint",
+    "build": "shx rm -rf dist && tsdx build --format cjs --tsconfig tsconfig.build.json",
+    "test": "tsdx test --coverage",
+    "lint": "eslint src --fix",
     "prepare": "tsdx build"
+  },
+  "devDependencies": {
+    "@stoner/config-typescript": "*",
+    "eslint": "8.9.0",
+    "shx": "0.3.4"
   }
 }

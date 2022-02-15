@@ -2,6 +2,7 @@
   "name": "stoner",
   "version": "0.0.0",
   "private": true,
+  "license": "",
   "workspaces": [
     "apps/**/*",
     "libs/**/*",
@@ -21,8 +22,8 @@
     "docker-build-ci": "turbo run docker-build-ci --parallel",
     "_prepare-env": "shx cp .env.example .env",
     "_prepare-husky": "husky install",
-    "_husky-pre-commit": "echo \"PRE COMMIT\"",
-    "_husky-commit-msg": "echo \"COMMIT MESSAGE\""
+    "_husky-pre-commit": "branch-name-lint && lint-staged",
+    "_husky-commit-msg": "commitlint"
   },
   "devDependencies": {
     "@b12k/branch-name-lint": "1.0.2",

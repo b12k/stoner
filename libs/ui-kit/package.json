@@ -11,16 +11,21 @@
   "scripts": {
     "start": "serve storybook-static",
     "_dev": "tsdx watch",
-    "build": "tsdx build",
+    "_build": "shx rm -rf dist && tsdx build --format cjs --tsconfig tsconfig.build.json",
     "docker-build": "env-cmd -i docker build {{CONTEXT}} --file={{DOCKERFILE}} --tag={{APP_NAME}} --build-arg=APP_NAME={{APP_NAME}}",
     "docker-build-ci": "env-cmd -i yarn docker-build --build-arg=BUILDKIT_INLINE_CACHE=1 --cache-from=localhost:5000/{{APP_NAME}}",
-    "test": "tsdx test --passWithNoTests",
-    "lint": "tsdx lint",
-    "storybook": "cross-env-shell \"start-storybook -p $UI_KIT_STORYBOOK_PORT\"",
+    "test": "tsdx test --passWithNoTests --coverage",
+    "lint": "eslint src",
+    "storybook": "env-cmd -s -x start-storybook -p {{UI_KIT_STORYBOOK_PORT}}",
     "storybook-build": "build-storybook"
   },
   "devDependencies": {
+    "@b12k/env-cmd": "10.2.0",
     "@babel/core": "7.17.3",
+    "@stoner/config-docker": "*",
+    "@stoner/config-eslint": "*",
+    "@stoner/config-jest": "*",
+    "@stoner/config-typescript": "*",
     "@storybook/addon-essentials": "6.4.19",
     "@storybook/addon-info": "5.3.21",
     "@storybook/addon-links": "6.4.19",
@@ -29,16 +34,14 @@
     "@types/react": "17.0.39",
     "@types/react-dom": "17.0.11",
     "babel-loader": "8.2.3",
+    "eslint": "8.9.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-is": "17.0.2",
+    "shx": "0.3.4",
     "tsdx": "0.14.1",
     "tslib": "2.3.1",
-    "typescript": "4.5.5",
-    "@stoner/config-docker": "*",
-    "@stoner/config-eslint": "*",
-    "@stoner/config-jest": "*",
-    "@stoner/config-typescript": "*"
+    "typescript": "4.5.5"
   },
   "dependencies": {
     "serve": "13.0.2"
