@@ -3,10 +3,8 @@ name: Lint and test
 on:
   workflow_dispatch:
   pull_request:
-    types:
-      - edited
-      - opened
-      - reopened
+    branches:
+      - master
     paths:
       - apps/**
       - libs/**
