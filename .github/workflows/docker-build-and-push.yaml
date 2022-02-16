@@ -50,14 +50,14 @@ jobs:
         if: steps.docker-cache.outputs.cache-hit == 'true'
         run: echo "Docker cached"
       - name: Add global yarn dependencies
-        run: yarn global add turbo@1.1.2 @b12k/env-cmd@10.2.0 --prefer-offline --ignore-scripts
+        run: yarn global add turbo @b12k/env-cmd
       - name: Setup docker cache registry
         run: docker run -d -p 5000:5000 --restart=always --name registry -v /tmp/docker-cache:/var/lib/registry registry:2 && npx wait-on tcp:5000
       - name: Build images
         run: yarn docker-build-ci
       - name: List images to tag
         id: images
-        run: echo ::set-output name=no-new::$(docker images --format "{{.Repository}}" | grep stoner || echo true)
+        run: echo ::set-output name=no-new::$(docker images --format "{{.Repository}}" | grep $NAMESPACE || echo true)
       - name: Tag cached images
         if: steps.images.outputs.no-new != 'true'
         run: docker images --format "{{.Repository}}" | grep $NAMESPACE | xargs -I "{}" docker tag "{}" $CACHE_REGISTRY/"{}"
