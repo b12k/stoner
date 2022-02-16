@@ -19,7 +19,7 @@ jobs:
     env:
       DOCKER_BUILDKIT: 1
       CACHE_REGISTRY: localhost:5000
-      YARN_CACHE_FOLDER: ./.yarn-cache
+      NAMESPACE: stoner
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -35,8 +35,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: node_modules/.cache/turbo
-          key: turbo-${{ github.job }}-${{ github.ref_name }}-${{ github.sha }}
-          restore-keys: turbo-${{ github.job }}-${{ github.ref_name }}-
+          key: turbo-${{ github.job }}
       - name: Setup Docker cache
         id: docker-cache
         uses: actions/cache@v2
@@ -49,11 +48,10 @@ jobs:
       - name: Is Docker cached?
         if: steps.docker-cache.outputs.cache-hit == 'true'
         run: echo "Docker cached"
-      - name: Yarn add global base deps
-        run: yarn global add turbo @b12k/env-cmd
-      - name: Setup local docker registry
-        run: |
-          docker run -d -p 5000:5000 --restart=always --name registry -v /tmp/docker-cache:/var/lib/registry registry:2 && npx wait-on tcp:5000
+      - name: Add global yarn dependencies
+        run: yarn global add turbo @b12k/env-cmd --prefer-offline --ignore-scripts
+      - name: Setup docker cache registry
+        run: docker run -d -p 5000:5000 --restart=always --name registry -v /tmp/docker-cache:/var/lib/registry registry:2 && npx wait-on tcp:5000
       - name: Build images
         run: yarn docker-build-ci
       - name: List images to tag
@@ -61,10 +59,10 @@ jobs:
         run: echo ::set-output name=no-new::$(docker images --format "{{.Repository}}" | grep stoner || echo true)
       - name: Tag cached images
         if: steps.images.outputs.no-new != 'true'
-        run: docker images --format "{{.Repository}}" | grep stoner | xargs -I "{}" docker tag "{}" localhost:5000/"{}"
+        run: docker images --format "{{.Repository}}" | grep $NAMESPACE | xargs -I "{}" docker tag "{}" $CACHE_REGISTRY/"{}"
       - name: List images to push
         if: steps.images.outputs.no-new != 'true'
-        run: docker images --format "{{.Repository}}" | grep localhost:5000/stoner || echo false
-      - name: Push images to local registry
+        run: docker images --format "{{.Repository}}" | grep $CACHE_REGISTRY/$NAMESPACE || echo false
+      - name: Push images to cache registry
         if: steps.images.outputs.no-new != 'true' && steps.cache.outputs.cache-hit != 'true'
-        run: docker images --format "{{.Repository}}" | grep localhost:5000/stoner | xargs -I "{}" docker push "{}"
+        run: docker images --format "{{.Repository}}" | grep $CACHE_REGISTRY/$NAMESPACE | xargs -I "{}" docker push "{}"
