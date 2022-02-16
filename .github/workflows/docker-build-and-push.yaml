@@ -11,6 +11,7 @@ on:
       - apps/**
       - libs/**
       - configs/**
+      - .github/workflows/docker-build-and-push.yaml
 
 jobs:
   build-and-push:
@@ -49,7 +50,7 @@ jobs:
         if: steps.docker-cache.outputs.cache-hit == 'true'
         run: echo "Docker cached"
       - name: Add global yarn dependencies
-        run: yarn global add turbo @b12k/env-cmd --prefer-offline --ignore-scripts
+        run: yarn global add turbo@1.1.2 @b12k/env-cmd@10.2.0 --prefer-offline --ignore-scripts
       - name: Setup docker cache registry
         run: docker run -d -p 5000:5000 --restart=always --name registry -v /tmp/docker-cache:/var/lib/registry registry:2 && npx wait-on tcp:5000
       - name: Build images
